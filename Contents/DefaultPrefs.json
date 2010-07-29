@@ -1,0 +1,23 @@
+[
+  {
+    "id"        : "username",
+    "type"      : "text",
+    "default"   : "",
+    "label"     : "Username",
+  },
+  
+  {
+    "id"        : "password",
+    "type"      : "text",
+    "default"   : "",
+    "label"     : "Password",
+    "option"    : "hidden",
+  },
+  
+  {
+    "id"        : "hd",
+    "type"      : "bool",
+    "default"   : "true",
+    "label"     : "Enable High Definition Video",
+  },
+]
