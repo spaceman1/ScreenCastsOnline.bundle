@@ -6,8 +6,6 @@
 #  Copyright (c) 2009 Plex. All rights reserved.
 #
 
-from PMS import *
-
 SITEMAP_URL   = "http://www.screencastsonline.com/sco_info/info/sitemapcategory.html"
 RSS_URL_FREE  = "http://www.screencastsonline.com/feeds/scofree.xml"
 RSS_URL_2010  = "http://www.screencastsonline.com/Extra_Premium/feeds/scoextra_prem_2010_%s.xml"
@@ -30,7 +28,7 @@ def Start():
   PrefsItem.thumb = R("icon-sco.png")
   HTTP.SetCacheTime(7200)
   Prefs.SetDialogTitle(L("ScreenCastsOnline Preferences"))
-  if Dict.Get("blacklist") is None: Dict.Reset()
+  if Dict["blacklist"] is None: Dict.Reset()
   LogIn()
   SetTitle1()
 
@@ -41,7 +39,7 @@ def SetTitle1():
     MediaContainer.title1 = L("ScreenCastsOnline")
 
 def CreateDict():
-  Dict.Set("blacklist", [])
+  Dict["blacklist"] = []
 
 def GetVideoDef():
   if Prefs.Get("hd"): return "HD"
@@ -61,14 +59,14 @@ def UpdateCache():
     HTTP.Request(RSS_URL_FREE)
 
 def UpdateBlacklist():
-  blacklist_json = HTTP.Request(BLACKLIST_URL)
+  blacklist_json = HTTP.Request(BLACKLIST_URL).content
   if blacklist_json is not None:
     try:
-      Dict.Set("blacklist", JSON.ObjectFromString(blacklist_json))
+      Dict["blacklist"] = JSON.ObjectFromString(blacklist_json)
     except:
-      Dict.Set("blacklist", [])
+      Dict["blacklist"] = []
   else:
-    Dict.Set("blacklist", [])
+    Dict["blacklist"] = []
 
 def LogIn():
   global LOGGED_IN
@@ -78,7 +76,7 @@ def LogIn():
     try:
       # Set the password & request a members-only page
       HTTP.SetPassword("www.screencastsonline.com", Prefs.Get("username"), Prefs.Get("password"))
-      result = HTTP.Request("http://www.screencastsonline.com/Extra_Premium/info/overview.html", cacheTime=0)
+      result = HTTP.Request("http://www.screencastsonline.com/Extra_Premium/info/overview.html", cacheTime=0).content
       if result is not None:
         LOGGED_IN = True
         UpdateBlacklist()
