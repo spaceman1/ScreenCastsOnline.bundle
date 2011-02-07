@@ -8,7 +8,7 @@
 
 SITEMAP_URL   = "http://www.screencastsonline.com/sco_info/info/sitemapcategory.html"
 RSS_URL_FREE  = "http://www.screencastsonline.com/feeds/scofree.xml"
-RSS_URL_2011  = "http://www.screencastsonline.com/Extra_Premium/feeds/scoextra_prem_2011_%s.xml"
+RSS_URL_2011  = "http://www.screencastsonline.com/Extra_Premium/feeds/scoextra_prem_2011_HD.xml"
 RSS_URL_2010  = "http://www.screencastsonline.com/Extra_Premium/feeds/scoextra_prem_2010_%s.xml"
 RSS_URL_2009  = "http://www.screencastsonline.com/Extra_Premium/feeds/scoextra_prem_2009_%s.xml"
 RSS_URL_2008  = "http://www.screencastsonline.com/Extra_Premium/feeds/scoextra_prem_2008_%s.xml"
@@ -56,7 +56,7 @@ def UpdateCache():
     HTTP.Request(RSS_URL_2008 % videoDef)
     HTTP.Request(RSS_URL_2009 % videoDef)
     HTTP.Request(RSS_URL_2010 % videoDef)
-    HTTP.Request(RSS_URL_2011 % videoDef)
+    HTTP.Request(RSS_URL_2011)
     UpdateBlacklist()
   else:
     HTTP.Request(RSS_URL_FREE)
@@ -109,8 +109,8 @@ def MainMenu():
     videoDef = GetVideoDef()
 
     # Add all the items, using the appropriate feeds
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2011: SCO???? and above")), url=RSS_URL_2011 % videoDef, label=L("2011")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2010: SCO0232 - SCO????")), url=RSS_URL_2010 % videoDef, label=L("2010")))
+    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2011: SCO0283 and above")), url=RSS_URL_2011 % videoDef, label=L("2011")))
+    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2010: SCO0232 - SCO0282")), url=RSS_URL_2010 % videoDef, label=L("2010")))
     d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2009: SCO0181 - SCO0231")), url=RSS_URL_2009 % videoDef, label=L("2009")))
     d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2008: SCO0131 - SCO0180")), url=RSS_URL_2008 % videoDef, label=L("2008")))
     d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2007: SCO0081 - SCO0130")), url=RSS_URL_2007 % videoDef, label=L("2007")))
