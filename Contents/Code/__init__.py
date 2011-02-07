@@ -20,6 +20,7 @@ BLACKLIST_URL = "http://www.screencastsonline.com/Extra_Premium/feeds/scoblackli
 LOGGED_IN = False
 
 def Start():
+  Plugin.AddPrefixHandler("/video/sco", MainMenu, "ScreenCastsOnline", "icon-default.png", "art-default.jpg")
   Plugin.AddViewGroup("List", viewMode="List", mediaType="items")
   MediaContainer.viewGroup = "List"
   MediaContainer.noCache = True
@@ -28,7 +29,7 @@ def Start():
   VideoItem.thumb = R("icon-sco.png")
   PrefsItem.thumb = R("icon-sco.png")
   HTTP.CacheTime = 7200
-  Prefs.SetDialogTitle(L("ScreenCastsOnline Preferences"))
+  #Prefs.SetTitle1Title(L("ScreenCastsOnline Preferences"))
   if Dict["blacklist"] is None: Dict.Reset()
   LogIn()
   SetTitle1()
@@ -99,7 +100,6 @@ def ValidatePrefs():
   if not LOGGED_IN:
     return MessageContainer("Unable to log in to ScreenCastsOnline", "The username or password you provided was incorrect.")
 
-@handler("/video/sco", "ScreenCastsOnline")
 def MainMenu():
   d = MediaContainer()
 
@@ -187,6 +187,16 @@ def RSSDirectory(sender, url, label=None, mixed=False):
     if should_add:
       # Clean up the title first
       title = title.replace("[HD]","").replace("[DT]","").replace("[ED]", "")
-      dir.Append(VideoItem(url, title=title, subtitle=subtitle, thumb=thumb))
+      dir.Append(VideoItem(url, title=title, subtitle=subtitle, thumb=Function(GetThumb, url=thumb)))
 
   return dir
+
+def GetThumb(url):
+  if url is not None:
+    try:
+      data = HTTP.Request(url, cacheTime=CACHE_1MONTH).content
+      return DataObject(data, 'image/png')
+    except:
+      pass
+
+  return Redirect(R("icon-sco.png"))
