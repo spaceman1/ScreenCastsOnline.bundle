@@ -109,7 +109,7 @@ def MainMenu():
     videoDef = GetVideoDef()
 
     # Add all the items, using the appropriate feeds
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2011: SCO0283 and above")), url=RSS_URL_2011 % videoDef, label=L("2011")))
+    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2011: SCO0283 and above")), url=RSS_URL_2011, label=L("2011")))
     d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2010: SCO0232 - SCO0282")), url=RSS_URL_2010 % videoDef, label=L("2010")))
     d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2009: SCO0181 - SCO0231")), url=RSS_URL_2009 % videoDef, label=L("2009")))
     d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2008: SCO0131 - SCO0180")), url=RSS_URL_2008 % videoDef, label=L("2008")))
