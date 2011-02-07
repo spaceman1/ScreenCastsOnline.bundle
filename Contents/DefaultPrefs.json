@@ -3,21 +3,21 @@
     "id"        : "username",
     "type"      : "text",
     "default"   : "",
-    "label"     : "Username",
+    "label"     : "Username"
   },
-  
+
   {
     "id"        : "password",
     "type"      : "text",
     "default"   : "",
     "label"     : "Password",
-    "option"    : "hidden",
+    "option"    : "hidden"
   },
-  
+
   {
     "id"        : "hd",
     "type"      : "bool",
     "default"   : "true",
-    "label"     : "Enable High Definition Video",
-  },
+    "label"     : "Enable High Definition Video"
+  }
 ]
