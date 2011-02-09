@@ -18,6 +18,6 @@
     "id"        : "hd",
     "type"      : "bool",
     "default"   : "true",
-    "label"     : "Enable High Definition Video"
+    "label"     : "Enable HD for 2006-2010 Videos"
   }
 ]

@@ -29,16 +29,16 @@ def Start():
   VideoItem.thumb = R("icon-sco.png")
   PrefsItem.thumb = R("icon-sco.png")
   HTTP.CacheTime = 7200
-  #Prefs.SetTitle1Title(L("ScreenCastsOnline Preferences"))
+  #Prefs.SetTitle1Title("ScreenCastsOnline Preferences")
   if Dict["blacklist"] is None: Dict.Reset()
   LogIn()
   SetTitle1()
 
 def SetTitle1():
   if LOGGED_IN:
-    MediaContainer.title1 = L("ScreenCastsOnline Extra!")
+    MediaContainer.title1 = "ScreenCastsOnline Extra!"
   else:
-    MediaContainer.title1 = L("ScreenCastsOnline")
+    MediaContainer.title1 = "ScreenCastsOnline"
 
 def CreateDict():
   Dict["blacklist"] = []
@@ -65,6 +65,7 @@ def UpdateBlacklist():
   blacklist_json = HTTP.Request(BLACKLIST_URL).content
   if blacklist_json is not None:
     try:
+      blacklist_json = blacklist_json.replace(',\n]', '\n]')
       Dict["blacklist"] = JSON.ObjectFromString(blacklist_json)
     except:
       Dict["blacklist"] = []
@@ -109,19 +110,19 @@ def MainMenu():
     videoDef = GetVideoDef()
 
     # Add all the items, using the appropriate feeds
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2011: SCO0283 and above")), url=RSS_URL_2011, label=L("2011")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2010: SCO0232 - SCO0282")), url=RSS_URL_2010 % videoDef, label=L("2010")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2009: SCO0181 - SCO0231")), url=RSS_URL_2009 % videoDef, label=L("2009")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2008: SCO0131 - SCO0180")), url=RSS_URL_2008 % videoDef, label=L("2008")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2007: SCO0081 - SCO0130")), url=RSS_URL_2007 % videoDef, label=L("2007")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2006: SCO0027 - SCO0080")), url=RSS_URL_2006 % videoDef, label=L("2006")))
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("ScreenCasts from 2005: SCO0001 - SCO0026")), url=RSS_URL_2005, label=L("2005"), mixed=True))
-    #d.Append(PrefsItem(title=L("Preferences")))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2011: SCO0283 and above"), url=RSS_URL_2011, label="2011"))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2010: SCO0232 - SCO0282"), url=RSS_URL_2010 % videoDef, label="2010"))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2009: SCO0181 - SCO0231"), url=RSS_URL_2009 % videoDef, label="2009"))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2008: SCO0131 - SCO0180"), url=RSS_URL_2008 % videoDef, label="2008"))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2007: SCO0081 - SCO0130"), url=RSS_URL_2007 % videoDef, label="2007"))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2006: SCO0027 - SCO0080"), url=RSS_URL_2006 % videoDef, label="2006"))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="ScreenCasts from 2005: SCO0001 - SCO0026"), url=RSS_URL_2005, label="2005", mixed=True))
+    d.Append(PrefsItem(title="Preferences"))
 
   # Main menu code for other users
   else:
-    d.Append(Function(DirectoryItem(RSSDirectory, title=L("Recent Free ScreenCasts")), url=RSS_URL_FREE, label=L("Free")))
-    d.Append(PrefsItem(title=L("Log in to access ScreenCasts for Extra! members only")))
+    d.Append(Function(DirectoryItem(RSSDirectory, title="Recent Free ScreenCasts"), url=RSS_URL_FREE, label="Free"))
+    d.Append(PrefsItem(title="Log in to access ScreenCasts for Extra! members only"))
   return d
 
 def RSSDirectory(sender, url, label=None, mixed=False):
@@ -137,7 +138,7 @@ def RSSDirectory(sender, url, label=None, mixed=False):
 
   # Get the blacklist (only used when logged in)
   if LOGGED_IN:
-    blacklist = Dict.Get("blacklist")
+    blacklist = Dict["blacklist"]
   else:
     blacklist = []
 
