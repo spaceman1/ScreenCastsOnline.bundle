@@ -125,7 +125,7 @@ def RSSDirectory(sender, url, label=None, mixed=False):
   feed = XML.ElementFromURL(url, headers=AuthHeader())
 
   # Get the blacklist (only used when logged in)
-  if LoggedIn():
+  if logged_in:
     blacklist = Dict["blacklist"]
   else:
     blacklist = []
@@ -146,31 +146,28 @@ def RSSDirectory(sender, url, label=None, mixed=False):
     if len(thumbEl) > 0:
       thumb = thumbEl[0].get("url")
 
-    # Stop if it's an iPod video, or it's a HD video and we're in ED mode
-    if title.find("[iPod]") == -1 and (HD or not HD and title.find("[HD]") == -1):
+    # If logged in, we need to do additional processing
+    if logged_in:
 
-      # If logged in, we need to do additional processing
-      if logged_in:
+      # If the title is blacklisted, stop
+      if title not in blacklist:
 
-        # If the title is blacklisted, stop
-        if title not in blacklist:
+        # If the show identifier not has already been added, add the item
+        if title[1:8] not in added_titles:
 
-          # If the show identifier not has already been added, add the item
-          if title[1:8] not in added_titles:
+          # Add the show identifier to the added_titles array
+          if mixed and HD: added_titles.append(title[1:8])
+          should_add = True
 
-            # Add the show identifier to the added_titles array
-            if mixed and HD: added_titles.append(title[1:8])
-            should_add = True
+        # If in HD mode, and a title has already been added, but this item is in HD,
+        # remove the previous item & add this one instead
+        elif HD and title.find("[HD]") != -1:
+          dir.Pop(len(dir)-1)
+          should_add = True
 
-          # If in HD mode, and a title has already been added, but this item is in HD,
-          # remove the previous item & add this one instead
-          elif HD and title.find("[HD]") != -1:
-            dir.Pop(len(dir)-1)
-            should_add = True
-
-      # If not logged in, just add the item
-      else:
-        should_add = True
+    # If not logged in, just add the item
+    else:
+      should_add = True
 
     # If the item should be added, add it
     if should_add:
